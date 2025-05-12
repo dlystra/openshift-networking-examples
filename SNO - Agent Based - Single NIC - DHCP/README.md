@@ -1,4 +1,4 @@
-# SNO - Agent Based - Single NIC - Static IP
+# SNO - Agent Based - Single NIC - DHCP
 
 This is an example one of the most basic OpenShift deployments possible. This uses the agent based installer to create a single node OpenShift cluster operating on a single NIC using DHCP.
 
