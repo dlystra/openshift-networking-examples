@@ -1,0 +1,23 @@
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: {{ cluster-name }}
+rendezvousIP: {{ rendezvous-ip }}
+hosts:
+  - hostname: {{ node-hostname }}
+    interfaces:
+      - name: {{ node-int }}
+        macAddress: {{ node-int-mac }}
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: {{ node-int }}
+          type: ethernet
+          state: up
+          mac-address: {{ node-int-mac }}
+          ipv4:
+            enabled: true
+            dhcp: true
+          ipv6:
+            enabled: false

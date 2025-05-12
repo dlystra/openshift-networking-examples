@@ -1,35 +1,34 @@
 # SNO - Agent Based - Single NIC - Static IP
 
-This is an example one of the most basic OpenShift deployments possible. This uses the agent based installer to create a single node OpenShift cluster operating on a single NIC using a static IP.
+This is an example one of the most basic OpenShift deployments possible. This uses the agent based installer to create a single node OpenShift cluster operating on a single NIC using DHCP.
 
 ## Variables
 
 | Variable Name      | Type    | Example            | Description                             |
 |--------------------|---------|--------------------|-----------------------------------------|
 | `cluster-name`     | string  | `sno-cluster`      | Desired name of OCP cluster             |
-| `dns-ip`           | string  | `192.168.0.2`      | DNS server IP address                   |
 | `domain`           | string  | `example.com`      | Domain name of OCP cluster              |
-| `gwy-ip`           | string  | `192.168.0.1`      | Physical subnet gateway IP address      |
 | `machine-subnet`   | string  | `192.168.0.0/24`   | Physical subnet for OCP node            |
 | `node-int`         | string  | `eno1`             | Node interface name                     |
 | `node-int-mac`     | string  | `00:25:64:fd:1f:ac`| Node interface MAC address              |
-| `node-ip`          | string  | `192.168.0.10`     | Desired IP of OCP node                  |
 | `public-ssh-key`   | string  |                    | Public SSH key for SSH access to node   |
 | `pull-secret`      | string  |                    | OCP pull secret                         |
+| `rendezvous-ip`    | string  | `192.168.0.10`     | IP DHCP will assign to node             |
 
 ## Networking Requirements
 
 - DNS
-  - api.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - api-int.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - *.apps.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
+  - api.{{ cluster-name }}.{{ domain }} resolves to {{ rendezvous-ip }}
+  - api-int.{{ cluster-name }}.{{ domain }} resolves to {{ rendezvous-ip }}
+  - *.apps.{{ cluster-name }}.{{ domain }} resolves to {{ rendezvous-ip }}
   - DNS provider is reachable from {{ physical-subnet }}
 
 - DHCP
-  - None
+  - DHCP server configured for {{ machine subnet }}
+  - DHCP server configured to assign {{ rendezvous-ip }} to {{ node-int-mac }}
 
 - Routing
-  - {{ physical-subnet }} can route to the internet (or local registry) via {{ gwy-ip }}
+  - {{ physical-subnet }} can route to the internet (or local registry)
 
 ## Populated Examples
 
@@ -86,20 +85,7 @@ hosts:
           mac-address: 00:25:64:fd:1f:ac
           ipv4:
             enabled: true
-            address:
-              - ip: 192.168.0.10
-                prefix-length: 24
-            dhcp: false
+            dhcp: true
           ipv6:
             enabled: false
-      dns-resolver:
-        config:
-          server:
-            - 192.168.0.2
-      routes:
-        config:
-          - destination: 0.0.0.0/0
-            next-hop-address: 192.168.0.1
-            next-hop-interface: eno1
-            table-id: 254
 ```
