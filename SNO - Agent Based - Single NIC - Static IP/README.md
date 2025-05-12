@@ -6,14 +6,16 @@ This is an example of the most basic OpenShift deployment possible. This uses th
 
 | Variable Name      | Type    | Example            | Description                             |
 |--------------------|---------|--------------------|-----------------------------------------|
-| `domain`           | string  | `example.com`      | Domain name of OCP cluster              |
 | `cluster-name`     | string  | `sno-cluster`      | Desired name of OCP cluster             |
+| `dns-ip`           | string  | `192.168.0.2`      | DNS server IP address                   |
+| `domain`           | string  | `example.com`      | Domain name of OCP cluster              |
+| `gwy-ip`           | string  | `192.168.0.1`      | Physical subnet gateway IP address      |
 | `machine-subnet`   | string  | `192.168.0.0/24`   | Physical subnet for OCP node            |
-| `node-ip`          | string  | `192.168.0.10`     | Desired IP of OCP node                  |
 | `node-int`         | string  | `eno1`             | Node interface name                     |
 | `node-int-mac`     | string  | `00:25:64:fd:1f:ac`| Node interface MAC address              |
-| `dns-ip`           | string  | `192.168.0.2`      | DNS server IP address                   |
-| `gwy-ip`           | string  | `192.168.0.1`      | Physical subnet gateway IP address      |
+| `node-ip`          | string  | `192.168.0.10`     | Desired IP of OCP node                  |
+| `public-ssh-key`   | string  |                    | Public SSH key for SSH access to node   |
+| `pull-secret`      | string  |                    | OCP pull secret                         |
 
 ## Networking Requirements
 
