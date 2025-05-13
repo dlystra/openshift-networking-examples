@@ -2,6 +2,11 @@
 
 This is an example of adding an addition NIC to an existing OpenShift deployment using the Kubernetes NMState Operator. A common use case for this configuration would be enabling OpenShift to access an isolated network that cannot be routed to via the primary NIC.
 
+## Assumptions
+
+- Kubernetes NMState Operator is installed and NMState object created
+  - [Installing the Kubernetes NMState Operator](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/networking/networking-operators#installing-the-kubernetes-nmstate-operator-cli)
+
 ## Variables
 
 | Variable Name        | Type    | Example                  | Description                             |
