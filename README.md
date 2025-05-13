@@ -13,3 +13,5 @@ This repository contains a collection of example configurations for common OpenS
 [SNO - Agent Based - Dual NIC - DHCP](https://github.com/dlystra/openshift-networking-examples/blob/main/SNO%20-%20Agent%20Based%20-%20Dual%20NIC%20-%20DHCP/README.md)
 
 ## Post Deployment Configurations
+
+[Kubernetes NMState Operator - Ethernet](https://github.com/dlystra/openshift-networking-examples/tree/main/Kubernetes%20NMState%20Operator%20-%20Ethernet)
