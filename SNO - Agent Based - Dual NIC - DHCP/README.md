@@ -29,6 +29,7 @@ This is an example one of the most basic OpenShift deployments possible. This us
 
 - DHCP
   - DHCP server configured for {{ machine subnet }}
+  - DHCP server configured for secondary subnet
   - DHCP server configured to assign {{ rendezvous-ip }} to {{ node-int-mac }}
   - DHCP server configured to assign an IP to {{ node-int2-mac }}
 
