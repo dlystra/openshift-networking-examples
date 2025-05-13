@@ -1,0 +1,31 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  annotations:
+    description: adding additional single NIC interface with static IP
+  name: ethernet-static
+spec:
+  desiredState:
+    interfaces:
+      - ipv4:
+          enabled: true
+          address:
+            - ip: {{ node-ip }}
+              prefix-length: 24
+        ipv6:
+          enabled: false
+        name: {{ node-int }}
+        state: up
+        type: ethernet
+    dns-resolver:
+      config:
+        server:
+          - {{ dns-ip }}
+    routes:
+      config:
+        - destination: {{ destination-subnet }}
+          next-hop-address: {{ gwy-ip }}
+          next-hop-interface: {{ node-int }}
+          table-id: 254
+  nodeSelector:
+    {{ nodeselector-key }}: {{ nodeselector-value }}

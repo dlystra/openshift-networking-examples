@@ -30,6 +30,9 @@ This is an example one of the most basic OpenShift deployments possible. This us
 - Routing
   - {{ physical-subnet }} can route to the internet (or local registry)
 
+- Switchport
+  - The switch's port is configured as an access port
+
 ## Populated Examples
 
 **'install-config.yaml'**

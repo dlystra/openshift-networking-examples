@@ -16,7 +16,7 @@ This is an example one of the most basic OpenShift deployments possible. This us
 | `node-int2`        | string  | `eno2`             | Node secondary interface name           |
 | `node-int2-mac`    | string  | `00:25:64:fd:1f:b0`| Node secondary interface MAC address    |
 | `node-ip`          | string  | `192.168.0.10`     | Desired IP of OCP node                  |
-| `node-ip2`         | string  | `192.168.1.10`     | Desired secondary IP of OCP node        |
+| `node-ip2`         | string  | `192.168.100.10`   | Desired secondary IP of OCP node        |
 | `public-ssh-key`   | string  |                    | Public SSH key for SSH access to node   |
 | `pull-secret`      | string  |                    | OCP pull secret                         |
 
@@ -33,6 +33,9 @@ This is an example one of the most basic OpenShift deployments possible. This us
 
 - Routing
   - {{ physical-subnet }} can route to the internet (or local registry) via {{ gwy-ip }}
+
+- Switchport
+  - The switch's port is configured as an access port
 
 ## Populated Examples
 
@@ -104,7 +107,7 @@ hosts:
           ipv4:
             enabled: true
             address:
-              - ip: 192.168.1.10
+              - ip: 192.168.100.10
                 prefix-length: 24
             dhcp: false
           ipv6:
