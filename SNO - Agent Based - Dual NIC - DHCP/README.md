@@ -1,6 +1,6 @@
 # SNO - Agent Based - Dual NIC - DHCP
 
-This is an example one of the most basic OpenShift deployments possible. This uses the agent based installer to create a single node OpenShift cluster operating on separate dual NICs using a static IP. A common use case for this configuration would be enabling OpenShift to access an isolated network that cannot be routed to via the primary NIC.
+This is an example one of the most basic OpenShift deployments possible. This uses the agent based installer to create a single node OpenShift cluster operating on separate dual NICs using DHCP. A common use case for this configuration would be enabling OpenShift to access an isolated network that cannot be routed to via the primary NIC.
 
 ## Variables
 
