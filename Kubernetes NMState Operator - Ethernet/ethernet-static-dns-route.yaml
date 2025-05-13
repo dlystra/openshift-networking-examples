@@ -3,7 +3,7 @@ kind: NodeNetworkConfigurationPolicy
 metadata:
   annotations:
     description: adding additional single NIC interface with static IP
-  name: ethernet-static
+  name: ethernet-static-dns-route
 spec:
   desiredState:
     interfaces:
