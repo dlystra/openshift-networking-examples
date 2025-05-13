@@ -1,0 +1,50 @@
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: {{ cluster-name }}
+rendezvousIP: {{ node-ip }}
+hosts:
+  - hostname: {{ node-hostname }}
+    interfaces:
+      - name: {{ node-int }}
+        macAddress: {{ node-int-mac }}
+      - name: {{ node-int2 }}
+        macAddress: {{ node-int2-mac }}
+    rootDeviceHints:
+      deviceName: /dev/sda
+    networkConfig:
+      interfaces:
+        - name: {{ node-int }}
+          type: ethernet
+          state: up
+          mac-address: {{ node-int-mac }}
+          ipv4:
+            enabled: true
+            address:
+              - ip: {{ node-ip }}
+                prefix-length: 24
+            dhcp: false
+          ipv6:
+            enabled: false
+        - name: {{ node-int2 }}
+          type: ethernet
+          state: up
+          mac-address: {{ node-int2-mac }}
+          ipv4:
+            enabled: true
+            address:
+              - ip: {{ node-ip2 }}
+                prefix-length: 24
+            dhcp: false
+          ipv6:
+            enabled: false
+      dns-resolver:
+        config:
+          server:
+            - {{ dns-ip }}
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: {{ gwy-ip }}
+            next-hop-interface: {{ node-int }}
+            table-id: 254
