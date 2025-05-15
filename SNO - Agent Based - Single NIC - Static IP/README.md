@@ -5,7 +5,7 @@ This is an example one of the most basic OpenShift deployments possible. This us
 ## Scenario
 The organization is installing single node OpenShift cluster with one NIC as a sandbox environment. The node interface eno1 has been patched into the top of rack switch and the switchport has been configured as an access port on VLAN 10. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. The gateway for the 192.168.10.0/24 subnet is 192.168.10.1 and the DNS provider is 192.168.0.2. DHCP is not available in this organization due to security requirements.
 
-![ocp-sno-single-nic](https://github.com/dlystra/openshift-networking-examples/blob/main/SNO%20-%20Agent%20Based%20-%20Single%20NIC%20-%20Static%20IP/ocp-sno-single-nic.png)
+![ocp-sno-single-nic](https://github.com/dlystra/openshift-networking-examples/blob/main/diagrams/ocp-sno-single-nic.png)
 
 ## Variables
 
