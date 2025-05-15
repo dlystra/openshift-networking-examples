@@ -14,4 +14,4 @@ This repository contains a collection of example configurations for common OpenS
 
 ## Post Deployment Configurations
 
-[Kubernetes NMState Operator - Ethernet](https://github.com/dlystra/openshift-networking-examples/tree/main/Kubernetes%20NMState%20Operator%20-%20Ethernet)
+[Kubernetes NMState Operator - Ethernet - Static IP](https://github.com/dlystra/openshift-networking-examples/tree/main/Kubernetes%20NMState%20Operator%20-%20Ethernet%20-%20Static)
