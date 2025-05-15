@@ -11,6 +11,8 @@ This is an example of adding an addition NIC to an existing OpenShift deployment
 
 The organization has a OpenShift cluster of six nodes with a single NIC on each node. Each node interface eno1 has been patched into the top of rack switch and the switchport has been configured as an access port on VLAN 10. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10-15 as the nodes IP addresses. The gateway for the 192.168.10.0/24 subnet is 192.168.10.1 and the DNS provider is 192.168.0.2. A new requirement for an isolated storage network has been defined post-deployment. The other node interface eno2 has been patched into a separate switch on an isolated storage network. This switchport is configured as an access port on VLAN 20. 192.168.20.10-15 has been designated as the node IP addresses for the storage network. There is no gateway or DNS requirement for VLAN 20. DHCP is not available in this organization due to security requirements.
 
+![ocp-dual-nic](https://github.com/dlystra/openshift-networking-examples/blob/main/diagrams/ocp-dual-nic.png)
+
 ## Variables
 
 | Variable Name        | Type    | Example                  | Description                           |
