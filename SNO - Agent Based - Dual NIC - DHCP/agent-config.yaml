@@ -30,10 +30,8 @@ hosts:
           ipv4:
             enabled: true
             dhcp: true
+            auto-dns: false
+            auto-gateway: false
+            auto-routes: false
           ipv6:
             enabled: false
-      routes:
-        config:
-          - destination: 0.0.0.0/0
-            next-hop-interface: {{ node-int }}
-            table-id: 254
