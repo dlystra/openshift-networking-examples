@@ -3,7 +3,7 @@
 This is an example a OpenShift deployment with two NICs forming a bond. This uses the agent based installer to create a single node OpenShift cluster operating on dual NICs to form a single bond. A common use case for this configuration would be to create network redundancy and increase total bandwidth to the OpenShift node.
 
 ## Scenario
-The organization requires that all physical servers have physical network redundancy to their stacked top of rack switches in the datacenter. This will be accomplished forming a LACP bond from the OpenShift node to the the top of rack switches. The node interfaces eno1 and eno2 have been patched into each switch and configured as a LACP lag (802.3ad) on the switches to form the bond. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. The gateway for the 192.168.10.0/24 subnet is 192.168.10.1 and the DNS provider is 192.168.0.2. DHCP is not available in this org due to security requirements.
+The organization requires that all physical servers have physical network redundancy to their stacked top of rack switches in the datacenter. This will be accomplished forming a LACP bond from the OpenShift node to the the top of rack switches. The node interfaces eno1 and eno2 have been patched into each switch and configured as a LACP lag (802.3ad) on the switches to form the bond on VLAN 10. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. The gateway for the 192.168.10.0/24 subnet is 192.168.10.1 and the DNS provider is 192.168.0.2. DHCP is not available in this organization due to security requirements.
 
 ![ocp-sno-bond](https://github.com/dlystra/openshift-networking-examples/blob/main/SNO%20-%20Agent%20Based%20-%20Bond%20-%20Static%20IP/ocp-sno-bond.png)
 
@@ -94,22 +94,6 @@ hosts:
       deviceName: /dev/sda
     networkConfig:
       interfaces:
-        - name: eno1
-          type: ethernet
-          state: up
-          mac-address: 00:25:64:fd:1f:ac
-          ipv4:
-            enabled: false
-          ipv6:
-            enabled: false
-        - name: eno2
-          type: ethernet
-          state: up
-          mac-address: 00:25:64:fd:1f:b0
-          ipv4:
-            enabled: false
-          ipv6:
-            enabled: false
         - name: bond0
           type: bond
           state: up
