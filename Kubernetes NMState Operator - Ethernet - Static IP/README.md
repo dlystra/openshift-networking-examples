@@ -1,4 +1,4 @@
-# Kubernetes NMState Operator - Ethernet - Static
+# Kubernetes NMState Operator - Ethernet - Static IP
 
 This is an example of adding an addition NIC to an existing OpenShift deployment using the Kubernetes NMState Operator. A common use case for this configuration would be enabling OpenShift to access an isolated network that cannot be routed to via the primary NIC.
 
