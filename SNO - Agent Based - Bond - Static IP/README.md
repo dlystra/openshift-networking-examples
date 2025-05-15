@@ -135,7 +135,7 @@ hosts:
       routes:
         config:
           - destination: 0.0.0.0/0
-            next-hop-address: 192.168.0.1
-            next-hop-interface: eno1
+            next-hop-address: 192.168.10.1
+            next-hop-interface: bond0
             table-id: 254
 ```
