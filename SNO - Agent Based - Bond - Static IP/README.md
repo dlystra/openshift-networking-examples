@@ -3,7 +3,7 @@
 This is an example a OpenShift deployment with two NICs forming a bond. This uses the agent based installer to create a single node OpenShift cluster operating on dual NICs to form a single bond. A common use case for this configuration would be to create network redundancy and increase total bandwidth to the OpenShift node.
 
 ## Scenario
-The organization requires that all physical servers have physical network redundancy to their stacked top of rack switches in the datacenter. This will be accomplished forming a LACP bond from the OpenShift node to the the top of rack switches. The node interfaces eno1 and eno2 have been patched into each switch and configured as a LACP lag (802.3ad) on the switches to form the bond. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. DHCP is not available in this org due to security requirements.
+The organization requires that all physical servers have physical network redundancy to their stacked top of rack switches in the datacenter. This will be accomplished forming a LACP bond from the OpenShift node to the the top of rack switches. The node interfaces eno1 and eno2 have been patched into each switch and configured as a LACP lag (802.3ad) on the switches to form the bond. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. The gateway for the 192.168.10.0/24 subnet is 192.168.10.1 and the DNS provider is 192.168.0.2. DHCP is not available in this org due to security requirements.
 
 ![ocp-sno-bond](https://github.com/dlystra/openshift-networking-examples/blob/main/SNO%20-%20Agent%20Based%20-%20Bond%20-%20Static%20IP/ocp-sno-bond.png)
 
@@ -27,22 +27,21 @@ The organization requires that all physical servers have physical network redund
 
 ## Networking Requirements
 
-- DNS
-  - api.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - api-int.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - *.apps.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - DNS provider is reachable from {{ physical-subnet }}
+- Switchports
+  - The switch's ports are configured as access ports
+  - The switch's ports are configured as an LACP LAG
 
 - DHCP
   - None
 
 - Routing
-  - {{ machine-subnet }} can route to the internet (or local registry) via {{ gwy-ip }}
-  - {{ machine-subnet }} can route to {{ dns-ip }}
+  - 192.168.10.0/24 can route to the internet (or local registry) via 192.168.10.1
+  - 192.168.10.0/24 can route to the DNS provider (192.168.0.2)
 
-- Switchports
-  - The switch's ports are configured as access ports
-  - The switch's ports are configured as an LACP LAG
+- DNS
+  - api.sno-cluster.example.com resolves to 192.168.10.10
+  - api-int.sno-cluster.example.com resolves to 192.168.10.10
+  - *.apps.sno-cluster.example.com resolves to 192.168.10.10
 
 ## Populated Examples
 
