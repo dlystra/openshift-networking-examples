@@ -5,6 +5,8 @@ This is an example a OpenShift deployment with two NICs forming a bond. This use
 ## Scenario
 The organization requires that all physical servers have physical network redundancy to their stacked top of rack switches in the datacenter. This will be accomplished forming a LACP bond from the OpenShift node to the the top of rack switches. The node interfaces eno1 and eno2 have been patched into each switch and configured as a LACP lag (802.3ad) on the switches to form the bond. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. DHCP is not available in this org due to security requirements.
 
+![ocp-sno-bond](https://github.com/dlystra/openshift-networking-examples/blob/main/SNO%20-%20Agent%20Based%20-%20Bond%20-%20Static%20IP/ocp-sno-bond.png)
+
 ## Variables
 
 | Variable Name      | Type    | Example            | Description                             |
