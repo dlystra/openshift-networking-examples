@@ -12,27 +12,27 @@ The organization is installing single node OpenShift cluster with one nic as a s
 | `cluster-name`     | string  | `sno-cluster`      | Desired name of OCP cluster             |
 | `dns-ip`           | string  | `192.168.0.2`      | DNS server IP address                   |
 | `domain`           | string  | `example.com`      | Domain name of OCP cluster              |
-| `gwy-ip`           | string  | `192.168.0.1`      | Physical subnet gateway IP address      |
-| `machine-subnet`   | string  | `192.168.0.0/24`   | Physical subnet for OCP node            |
+| `gwy-ip`           | string  | `192.168.10.1`      | Physical subnet gateway IP address      |
+| `machine-subnet`   | string  | `192.168.10.0/24`   | Physical subnet for OCP node            |
 | `node-int`         | string  | `eno1`             | Node interface name                     |
 | `node-int-mac`     | string  | `00:25:64:fd:1f:ac`| Node interface MAC address              |
-| `node-ip`          | string  | `192.168.0.10`     | Desired IP of OCP node                  |
+| `node-ip`          | string  | `192.168.10.10`     | Desired IP of OCP node                  |
 | `public-ssh-key`   | string  |                    | Public SSH key for SSH access to node   |
 | `pull-secret`      | string  |                    | OCP pull secret                         |
 
 ## Networking Requirements
 
 - DNS
-  - api.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - api-int.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - *.apps.{{ cluster-name }}.{{ domain }} resolves to {{ node-ip }}
-  - DNS provider is reachable from {{ physical-subnet }}
+  - api.sno-cluster.example.com resolves to 192.168.10.10
+  - api-int.sno-cluster.example.com resolves to 192.168.10.10
+  - *.apps.sno-cluster.example.comresolves to 192.168.10.10
+  - DNS provider is reachable from 192.168.10.0/24
 
 - DHCP
   - None
 
 - Routing
-  - {{ physical-subnet }} can route to the internet (or local registry) via {{ gwy-ip }}
+  - 192.168.10.0/24 can route to the internet (or local registry) via 192.168.10.1
 
 - Switchport
   - The switch's port is configured as an access port
@@ -60,7 +60,7 @@ networking:
   - cidr: 10.128.0.0/14
     hostPrefix: 23
   machineNetwork:
-  - cidr: 192.168.0.0/24
+  - cidr: 192.168.10.0/24
   networkType: OVNKubernetes
   serviceNetwork:
   - 172.30.0.0/16
@@ -76,7 +76,7 @@ apiVersion: v1beta1
 kind: AgentConfig
 metadata:
   name: sno-cluster
-rendezvousIP: 192.168.0.10
+rendezvousIP: 192.168.10.10
 hosts:
   - hostname: master-0.sno-cluster.example.com
     interfaces:
@@ -93,7 +93,7 @@ hosts:
           ipv4:
             enabled: true
             address:
-              - ip: 192.168.0.10
+              - ip: 192.168.10.10
                 prefix-length: 24
             dhcp: false
           ipv6:
@@ -105,7 +105,7 @@ hosts:
       routes:
         config:
           - destination: 0.0.0.0/0
-            next-hop-address: 192.168.0.1
+            next-hop-address: 192.168.10.1
             next-hop-interface: eno1
             table-id: 254
 ```
