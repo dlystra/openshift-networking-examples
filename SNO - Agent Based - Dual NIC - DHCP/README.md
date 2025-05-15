@@ -1,6 +1,12 @@
 # SNO - Agent Based - Dual NIC - DHCP
 
-This is an example one of the most basic OpenShift deployments possible. This uses the agent based installer to create a single node OpenShift cluster operating on separate dual NICs using DHCP. A common use case for this configuration would be enabling OpenShift to access an isolated network that cannot be routed to via the primary NIC.
+This is an example a OpenShift deployment with two separate NICs. This uses the agent based installer to create a single node OpenShift cluster operating on separate dual NICs using DHCP. A common use case for this configuration would be enabling OpenShift to access an isolated network that cannot be routed to via the primary NIC.
+
+## Scenario
+
+The organization is deploying a single node OpenShift cluster with dual NICs as a sandbox environment. The node interface eno1 has been patched into the top of rack switch and the switchport has been configured as an access port on VLAN 10. The organization has supplied VLAN 10 (192.168.10.0/24) as the OpenShift machine network and designated 192.168.10.10 as the node IP address. The gateway for the 192.168.10.0/24 subnet is 192.168.10.1 and the DNS provider is 192.168.0.2. The other node interface eno2 has been patched into a separate switch on an isolated storage network. This switchport is configured as an access port on VLAN 20. 192.168.20.10 has been designated as the node IP address for the storage network. There is no gateway or DNS requirement for VLAN 20. DHCP will be used to configure both interfaces.
+
+![ocp-sno-dual-nic](https://github.com/dlystra/openshift-networking-examples/blob/main/diagrams/ocp-sno-dual-nic.png)
 
 ## Variables
 
@@ -8,36 +14,35 @@ This is an example one of the most basic OpenShift deployments possible. This us
 |--------------------|---------|--------------------|-----------------------------------------|
 | `cluster-name`     | string  | `sno-cluster`      | Desired name of OCP cluster             |
 | `domain`           | string  | `example.com`      | Domain name of OCP cluster              |
-| `machine-subnet`   | string  | `192.168.0.0/24`   | Physical subnet for OCP node            |
+| `machine-subnet`   | string  | `192.168.10.0/24`   | Physical subnet for OCP node            |
 | `node-int`         | string  | `eno1`             | Node interface name                     |
 | `node-int-mac`     | string  | `00:25:64:fd:1f:ac`| Node interface MAC address              |
 | `node-int2`        | string  | `eno2`             | Node secondary interface name           |
 | `node-int2-mac`    | string  | `00:25:64:fd:1f:b0`| Node secondary interface MAC address    |
 | `public-ssh-key`   | string  |                    | Public SSH key for SSH access to node   |
 | `pull-secret`      | string  |                    | OCP pull secret                         |
-| `rendezvous-ip`    | string  | `192.168.0.10`     | IP DHCP will assign to node-int         |
-
-
+| `rendezvous-ip`    | string  | `192.168.10.10`     | IP DHCP will assign to node-int         |
 
 ## Networking Requirements
 
-- DNS
-  - api.{{ cluster-name }}.{{ domain }} resolves to {{ rendezvous-ip }}
-  - api-int.{{ cluster-name }}.{{ domain }} resolves to {{ rendezvous-ip }}
-  - *.apps.{{ cluster-name }}.{{ domain }} resolves to {{ rendezvous-ip }}
-  - DNS provider is reachable from {{ physical-subnet }}
-
-- DHCP
-  - DHCP server configured for {{ machine subnet }}
-  - DHCP server configured for secondary NIC subnet
-  - DHCP server configured to assign {{ rendezvous-ip }} to {{ node-int-mac }}
-  - DHCP server configured to assign an IP to {{ node-int2-mac }}
-
-- Routing
-  - {{ physical-subnet }} can route to the internet (or local registry)
-
 - Switchport
   - The switch's port is configured as an access port
+
+- DHCP
+  - DHCP server configured for VLAN 10 (192.168.10.0/24)
+  - DHCP server configured to assign 192.168.10.10 to the node eno1 interface MAC address.
+  - DHCP server configured for VLAN 20 (192.168.20.0/24)
+  - DHCP server configured to assign 192.168.20.10 to the node eno2 interface MAC address.
+
+- Routing
+  - 192.168.10.0/24 can route to the internet (or local registry) via 192.168.10.1
+  - 192.168.10.0/24 can route to the DNS provider (192.168.0.2)
+
+- DNS
+  - api.sno-cluster.example.com resolves to 192.168.10.10
+  - api-int.sno-cluster.example.com resolves to 192.168.10.10
+  - *.apps.sno-cluster.example.com resolves to 192.168.10.10
+  - DNS provider is reachable from 192.168.10.0/24
 
 ## Populated Examples
 
@@ -104,11 +109,9 @@ hosts:
           state: up
           mac-address: 00:25:64:fd:1f:b0
             dhcp: true
+            auto-dns: false
+            auto-gateway: false
+            auto-routes: false
           ipv6:
             enabled: false
-      routes:
-        config:
-          - destination: 0.0.0.0/0
-            next-hop-interface: eno1
-            table-id: 254
 ```

@@ -24,20 +24,20 @@ The organization is installing single node OpenShift cluster with one NIC as a s
 
 ## Networking Requirements
 
-- DNS
-  - api.sno-cluster.example.com resolves to 192.168.10.10
-  - api-int.sno-cluster.example.com resolves to 192.168.10.10
-  - *.apps.sno-cluster.example.comresolves to 192.168.10.10
-  - DNS provider is reachable from 192.168.10.0/24
+- Switchport
+  - The switch's port is configured as an access port
 
 - DHCP
   - None
 
 - Routing
   - 192.168.10.0/24 can route to the internet (or local registry) via 192.168.10.1
+  - 192.168.10.0/24 can route to the DNS provider (192.168.0.2)
 
-- Switchport
-  - The switch's port is configured as an access port
+- DNS
+  - api.sno-cluster.example.com resolves to 192.168.10.10
+  - api-int.sno-cluster.example.com resolves to 192.168.10.10
+  - *.apps.sno-cluster.example.com resolves to 192.168.10.10
 
 ## Populated Examples
 
