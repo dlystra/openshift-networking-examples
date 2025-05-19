@@ -1,0 +1,24 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  annotations:
+    description: adding a Linux bridge to eno2
+  name: bridge
+spec:
+  desiredState:
+    interfaces:
+      - name: br0
+        type: linux-bridge
+        state: up
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+        bridge:
+          options:
+            stp:
+              enabled: false
+          port:
+            - name: {{ node-port }}
+  nodeSelector:
+    {{ nodeselector-key }}: {{ nodeselector-value }}
