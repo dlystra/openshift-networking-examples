@@ -2,7 +2,7 @@ apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
   annotations:
-    description: adding a Linux bridge to eno2
+    description: adding a Linux bridge
   name: bridge
 spec:
   desiredState:
