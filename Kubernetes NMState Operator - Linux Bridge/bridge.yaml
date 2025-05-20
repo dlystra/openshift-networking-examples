@@ -19,6 +19,6 @@ spec:
             stp:
               enabled: false
           port:
-            - name: {{ node-port }}
+            - name: {{ node-int }}
   nodeSelector:
     {{ nodeselector-key }}: {{ nodeselector-value }}
