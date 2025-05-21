@@ -4,6 +4,8 @@ This repository contains a collection of example configurations for common OpenS
 
 ## Predeployment Configurations
 
+[Agent Based - Single NIC - Static IP](https://github.com/dlystra/openshift-networking-examples/tree/main/Agent%20Based%20-%20Single%20NIC%20-%20Static%20IP)
+
 [SNO - Agent Based - Single NIC - Static IP](https://github.com/dlystra/openshift-networking-examples/tree/main/SNO%20-%20Agent%20Based%20-%20Single%20NIC%20-%20Static%20IP)
 
 [SNO - Agent Based - Single NIC - DHCP](https://github.com/dlystra/openshift-networking-examples/tree/main/SNO%20-%20Agent%20Based%20-%20Single%20NIC%20-%20DHCP)
